@@ -105,7 +105,9 @@ useEffect(() => {
 			pin: true,
 			scrub: 1,
 			start: "top top",
-			end: () => "+=" + ((wrapper.scrollWidth - reachSection.clientWidth) + window.innerWidth * 6),
+			end: () => "+=" + ((wrapper.scrollWidth - reachSection.clientWidth)),
+
+			//  + window.innerWidth * 2
 			snap: {
 				snapTo: 1 / (totalSlides - 1), // snap to each slide
 				duration: 0.1,                 // smooth snapping duration

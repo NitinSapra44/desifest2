@@ -5,22 +5,22 @@ export default function Investment() {
 
 	const [activeCard, setActiveCard] = useState(0);
 	return (
-		<>
+		<div className>
 			{/* return investment */}
 			<div className=" pb-[40px] lg:pb-[160px]  bg-black text-white overflow-visible">
-				<div className="lg:px-[270px] mb-8 lg:mb-24 px-6">
-					<h2 className="flex lg:!text-[87px] text-3xl items-center gap-4 text-white mb-8">
+				<div className="lg:px-[270px] mb-8 lg:mb-8 px-6">
+					<h2 className="flex lg:!text-[60px] text-3xl items-center gap-4 text-white mb-8">
 						<span className="w-1.5 h-18 bg-[#FB0015]"></span>
 						Return on investment
 					</h2>
 
-					<p className="font-normal lg:text-2xl text-sm max-w-[640px]">
+					<p className="font-normal lg:text-lg text-sm max-w-[640px]">
 						AT DESIFEST WE KNOW SPONSORS EXPECT MEASURABLE RESULTS,
 						SO WE BUILD ROI INTO EVERY PARTNERSHIP.
 					</p>
 				</div>
 
-				<div className=" flex flex-col gap-y-8 lg:flex-row justify-center items-center [perspective:2000px] py-12 lg:h-[120vh] overflow-visible">
+				<div className=" flex flex-col gap-y-2 lg:flex-row justify-center items-center [perspective:2000px]  lg:h-[100vh] overflow-visible">
 					<div className={`relative w-fit min-w-[280px] [transform-style:preserve-3d] overflow-visible transition-all duration-[1200ms] ease-in-out ${activeCard === 1 ? ' [transform:rotateY(180deg)] ' : ''}`}>
 						<img
 							src="./returncard.png"
@@ -132,6 +132,6 @@ export default function Investment() {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }

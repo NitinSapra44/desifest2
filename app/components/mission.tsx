@@ -43,10 +43,10 @@ export default function Mission() {
       ref={missionRef}
       className="py-20 lg:py-[40px] bg-foreground relative min-h-[100vh] flex flex-col "
     >
-      <div className="text-text flex flex-col items-center z-20 relative space-y-12">
+      <div className="text-text flex flex-col items-center z-20 relative space-y-6">
         <label
           htmlFor="mission"
-          className="text-base lg:text-[36px] font-normal text-text uppercase mb-8"
+          className="text-base lg:text-3xl font-normal text-text uppercase mb-8"
         >
           our mission
         </label>
@@ -74,7 +74,7 @@ export default function Mission() {
         <div ref={elevateRef} className="opacity-0 flex flex-col items-center text-center max-w-[700px]">
           <h2 className="text-4xl lg:text-[60px] mission_text mb-4">elevate</h2>
           <p className="lg:text-base text-sm font-normal text-white/75 leading-snug">
-            We empower artists, newcomers, and brands by creating meaningful opportunities to collaborate, perform and grow.We elevate South Asian talent, representation, and cultural pride, bringing them to the national stage with world-class programming and a commitment to lasting impact.
+            We empower artists, newcomers, and brands by creating meaningful opportunities to collaborate, perform and grow.We elevate South Asian talent.
           </p>
         </div>
       </div>
@@ -89,12 +89,12 @@ export default function Mission() {
         />
       </div>
 
-      <div className="absolute left-0 bottom-0 w-full z-0 flex justify-center items-center pointer-events-none">
+      <div className="absolute left-0 bottom-0 w-full z-30 flex justify-center items-center pointer-events-none">
         <img
           loading="lazy"
           src="./missionperson.png"
           alt=""
-          className="lg:w-[50%] w-full h-auto"
+          className="lg:w-[70%] w-full h-auto"
         />
       </div>
     </div>
