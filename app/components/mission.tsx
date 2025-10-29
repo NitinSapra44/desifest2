@@ -46,7 +46,7 @@ export default function Mission() {
       <div className="text-text flex flex-col items-center z-20 relative space-y-2">
         <label
           htmlFor="mission"
-          className="text-base lg:text-3xl font-normal text-text uppercase mb-8"
+          className="text-base lg:text-3xl font-normal text-text uppercase mb-4"
         >
           our mission
         </label>

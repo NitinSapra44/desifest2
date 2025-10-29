@@ -101,7 +101,7 @@ export default function Sponsorship() {
             loading="lazy"
             src="./girls.png"
             alt=""
-            className=" lg:absolute lg:translate-x-32 right-0 bottom-0 lg:translate-y-16 w-[90%] lg:w-[520px] h-auto"
+            className=" lg:absolute lg:translate-x-32 right-0 bottom-0 lg:translate-y-16 w-[90%] lg:w-[520px] h-[auto]"
           />
         </div>
 
@@ -110,13 +110,13 @@ export default function Sponsorship() {
           <img
             loading="lazy"
             src="./girlsrect1.svg"
-            className="absolute left-0 bottom-0 w-full h-full lg:translate-y-20 object-cover lg:h-auto z-10"
+            className="absolute left-0 bottom-0 w-full h-full lg:translate-y-20 object-cover lg:h-[450px] z-10"
             alt=""
           />
           <img
             loading="lazy"
             src="./girlsrect2.svg"
-            className="absolute right-0 bottom-0 w-full h-full lg:translate-y-20 object-cover lg:h-auto z-20"
+            className="absolute right-0 bottom-0 w-full h-full lg:translate-y-20 object-cover lg:h-[450px] z-20"
             alt=""
           />
 
