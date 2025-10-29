@@ -38,9 +38,15 @@ export default function Home() {
 
 			<div className="fixed top-0 right-0 p-8 z-[999] lg:block hidden">
 
-				<a href="./overview-kit.pdf" download className="uppercase block mb-3 text-2xl font-medium text-text px-6 py-3 bg-accent">
-					Download overview kit
-				</a>
+<a
+  href="./overview-kit.pdf"
+  download
+  className="uppercase block mb-3 text-2xl font-medium text-text px-6 py-3 bg-[#fc0314] hover:opacity-90 transition"
+>
+  Download overview kit
+</a>
+
+
 
 				<a
 					href="#contact-form"

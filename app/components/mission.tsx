@@ -43,7 +43,7 @@ export default function Mission() {
       ref={missionRef}
       className="py-20 lg:py-[40px] bg-foreground relative min-h-[100vh] flex flex-col "
     >
-      <div className="text-text flex flex-col items-center z-20 relative space-y-6">
+      <div className="text-text flex flex-col items-center z-20 relative space-y-2">
         <label
           htmlFor="mission"
           className="text-base lg:text-3xl font-normal text-text uppercase mb-8"
@@ -94,7 +94,7 @@ export default function Mission() {
           loading="lazy"
           src="./missionperson.png"
           alt=""
-          className="lg:w-[60%] w-full h-auto"
+          className="lg:w-[70%] w-full h-auto"
         />
       </div>
     </div>

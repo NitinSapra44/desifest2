@@ -11,9 +11,20 @@ import ButtonLeft from './ui/button-left'
 import ButtonRight from './ui/button-right'
 
 export default function Sponsorship() {
-  const plugin = useRef(Autoplay({ delay: 1000, stopOnInteraction: false }))
+  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }))
   const scrollContainer = useRef<HTMLDivElement>(null)
   const [currentReach, setCurrentReach] = useState(0)
+  const [desktopIndex, setDesktopIndex] = useState(0)
+  const [carouselApi, setCarouselApi] = useState<any>(null)
+
+  // --- Desktop carousel API setup ---
+  useEffect(() => {
+    if (!carouselApi) return
+
+    carouselApi.on('select', () => {
+      setDesktopIndex(carouselApi.selectedScrollSnap())
+    })
+  }, [carouselApi])
 
   // --- Mobile scroll snapping ---
   useEffect(() => {
@@ -99,13 +110,13 @@ export default function Sponsorship() {
           <img
             loading="lazy"
             src="./girlsrect1.svg"
-            className="absolute left-0 bottom-0 w-full h-full lg:translate-y-16 object-cover lg:h-auto z-10"
+            className="absolute left-0 bottom-0 w-full h-full lg:translate-y-20 object-cover lg:h-auto z-10"
             alt=""
           />
           <img
             loading="lazy"
             src="./girlsrect2.svg"
-            className="absolute right-0 bottom-0 w-full h-full lg:translate-y-16 object-cover lg:h-auto z-20"
+            className="absolute right-0 bottom-0 w-full h-full lg:translate-y-20 object-cover lg:h-auto z-20"
             alt=""
           />
 
@@ -115,6 +126,7 @@ export default function Sponsorship() {
               plugins={[plugin.current]}
               opts={{ loop: true, align: 'start' }}
               className="w-full max-w-4xl mx-auto"
+              setApi={setCarouselApi}
             >
               <CarouselContent>
                 <CarouselItem>
@@ -175,6 +187,20 @@ export default function Sponsorship() {
                 </CarouselItem>
               </CarouselContent>
             </Carousel>
+
+            {/* Desktop Dot Navigation */}
+            <div className="flex justify-center gap-2 mt-2">
+              {[0, 1, 2].map((index) => (
+                <button
+                  key={index}
+                  onClick={() => carouselApi?.scrollTo(index)}
+                  className={`w-2 h-2 rounded-full transition-all ${
+                    desktopIndex === index ? 'bg-[#FB0015] w-8' : 'bg-white/30'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Mobile: Horizontal Snap Scroll */}
