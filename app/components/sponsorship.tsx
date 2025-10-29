@@ -11,7 +11,7 @@ import ButtonLeft from './ui/button-left'
 import ButtonRight from './ui/button-right'
 
 export default function Sponsorship() {
-  const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: false }))
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: false }))
   const scrollContainer = useRef<HTMLDivElement>(null)
   const [currentReach, setCurrentReach] = useState(0)
   const [desktopIndex, setDesktopIndex] = useState(0)
