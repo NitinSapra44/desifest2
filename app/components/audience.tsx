@@ -625,7 +625,7 @@ useEffect(() => {
 							ref={(el) => {
 								if (el) itemsRef.current[4] = el
 							}}
-							className="aud-reach-item lg:h-screen w-screen flex-shrink-0 grid grid-cols-2 items-center  relative z-30"
+							className="aud-reach-item lg:h-[120vh] w-screen flex-shrink-0 grid grid-cols-2 items-center  relative z-30 pt-48 "
 						>
 							<div className="">
 								<img
