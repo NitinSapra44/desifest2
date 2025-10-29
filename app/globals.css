@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #060608;
+  --accent: #fc0014;
+  --text: #f5f5f5
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-text: var(--text);
+  --font-heading: var(--font-heading);
+  --font-main: var(--font-main);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --foreground: #060608;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-main);
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+
+  h2 {
+    @apply lg:text-[113px] text-[32px] font-extrabold leading-none tracking-[3%];
+  }
+
+  h4 {
+    @apply lg:text-4xl text-2xl font-bold;
+  }
+
+  a, button {
+    @apply cursor-pointer;
+  }
+  
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* IE and Edge */
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+  }
+
+  /* Firefox */
+  .scrollbar-hidden {
+    scrollbar-width: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 1024px) {
+  .pin-spacer {
+    padding: unset !important;
+    height: unset !important;
+  }
+}
+
+
+
+.hero_gradient {
+  background: linear-gradient(185.13deg, rgba(237, 62, 54, 0) 5.71%, rgba(237, 62, 54, 0.8) 41.91%, rgba(237, 62, 54, 0) 95.19%);
+}
+
+.left-shadow {
+  background: linear-gradient(130.15deg, #000000 23.83%, rgba(0, 0, 0, 0) 47.63%);
+  /* background: linear-gradient(130.15deg, #000000 23.83%, rgba(0, 0, 0, 0) 36.63%); */
+}
+
+.right-shadow {
+  background: linear-gradient(130.84deg, #000000 8.25%, rgba(0, 0, 0, 0) 56.71%);
+  rotate: 180deg;
+
+}
+
+.mission_text {
+  /* box-shadow: 0px 8px 0px 0px #AB1218; */
+  text-shadow: 0px 8px 0px 0px #AB1218;
+
+}
+
+.audience-gradient {
+  background: linear-gradient(180deg, #B41407 0%, #4E0903 100%);
+}
+
+.audience-overlay {
+  backdrop-filter: blur(27.5px);
+
+  /* background: url(image.png); */
+  /* opacity: 0.68; */
+  /* filter: blur(13.75px); */
+
+}
+
+.audience_chipbg {
+  background: linear-gradient(90deg, rgba(171, 18, 24, 0) 0%, #AB1218 36.54%, rgba(171, 18, 24, 0) 100%);
+}
+
+.audience-bg {
+  background: radial-gradient(59.85% 59.85% at 50% 40.15%, #9B1207 0%, #000000 100%);
+
+}
+
+.jam-sessions {
+
+  filter: blur(6px);
+  opacity: 0.2;
+
+}
+
+.desifest-box {
+  background: radial-gradient(59.85% 59.85% at 50% 40.15%, #9B1207 0%, #000000 100%);
+
+}
+.sponsorship-text {
+  background: linear-gradient(90deg, #000000 0%, #AB1218 36.54%, #000000 100%);
+}
+
+.custom-time-effect {
+  transition-timing-function: cubic-bezier(0.3, 0.8, 0.3, 1.3)
+}
+
+@keyframes recoil {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  60% {
+    transform: translate(-35%, 2rem) rotate(17deg); /* overshoot */
+  }
+  80% {
+    transform: translate(-28%, 1.5rem) rotate(13deg); /* recoil */
+  }
+  100% {
+    transform: translate(-33%, 2rem) rotate(15deg); /* settle */
+  }
+}
+
+.modal-shadow {
+  box-shadow: 0px 0px 100px rgba(245, 245, 245, 0.5);
+
+}
+
+.contact-shadow {
+  box-shadow: 0px 0px 50px rgba(245, 245, 245, 0.25)
+}
+
