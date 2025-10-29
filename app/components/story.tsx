@@ -82,7 +82,7 @@ export default function Story() {
 		<section ref={storyContainer} id="our-story" className=" bg-[#2b0503]  flex relative overflow-hidden">
 
             <div className="wrapper flex relative w-screen ">
-                <div ref={slide1Ref} className=" relative z-20  transition-all duration-[800ms] ease-in-out w-screen flex-shrink-0 px-6 lg:px-16 lg:pt-[160px] lg:pb-[200px] pt-20 pb-40">
+                <div ref={slide1Ref} className=" relative z-20  transition-all duration-[800ms] ease-in-out w-screen flex-shrink-0 px-6 lg:px-16 lg:py-[160px] pt-20 pb-40">
 
                     <img
                         src="./storybg.svg"
@@ -112,7 +112,7 @@ export default function Story() {
 
                 </div>
 
-                <div ref={slide2Ref} className=" relative z-20 transition-all duration-[800ms] ease-in-out w-screen flex-shrink-0 px-6 lg:px-16 lg:pt-[320px] lg:pb-[200px] pt-20 pb-40">
+                <div ref={slide2Ref} className=" relative z-20 transition-all duration-[800ms] ease-in-out w-screen flex-shrink-0 px-6 lg:px-16 lg:py-[160px] pt-20 pb-40">
 
                     <img
                         src="./storybg.svg"

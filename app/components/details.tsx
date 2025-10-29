@@ -146,14 +146,14 @@ export default function Details() {
 							loading="lazy"
 							src="./rect1.svg"
 							alt=""
-							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover object-bottom lg:h-[40vh] z-40"
+							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover object-bottom lg:h-[30vh] z-40"
 						/>
 
 						<img
 							loading="lazy"
 							src="./rect2.svg"
 							alt=""
-							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover object-top lg:h-[40vh] z-40"
+							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover object-top lg:h-[30vh] z-40"
 						/>
 
 						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-6 lg:py-10 overflow-y-auto max-h-[40vh]">
@@ -204,14 +204,14 @@ export default function Details() {
 							loading="lazy"
 							src="./rect1.svg"
 							alt=""
-							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[40vh] z-40"
+							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[30vh] z-40"
 						/>
 
 						<img
 							loading="lazy"
 							src="./rect2.svg"
 							alt=""
-							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[40vh] z-40"
+							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[30vh] z-40"
 						/>
 
 						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-6 lg:py-10 overflow-y-auto max-h-[40vh]">
