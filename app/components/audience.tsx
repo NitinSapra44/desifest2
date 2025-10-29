@@ -83,33 +83,48 @@ export default function Audience() {
 	}, [])
 
 	// Horizontal scroll for audience reach section
-	useEffect(() => {
-		if (window.innerWidth < 1024) return
+// Horizontal scroll for audience reach section
+useEffect(() => {
+	if (window.innerWidth < 1024) return
 
-		const reachSection = audReachRef.current
-		if (!reachSection) return
+	const reachSection = audReachRef.current
+	if (!reachSection) return
 
-		const wrapper = reachSection.querySelector(
-			".aud-reach-wrapper"
-		) as HTMLElement
-		if (!wrapper) return
+	const wrapper = reachSection.querySelector(".aud-reach-wrapper") as HTMLElement
+	if (!wrapper) return
 
-		const items = reachSection.querySelectorAll(".aud-reach-item")
+	const items = gsap.utils.toArray(".aud-reach-item")
 
-		// Horizontal scroll animation
-		gsap.to(wrapper, {
-			xPercent: -100 * (items.length - 1),
-			ease: "none",
-			scrollTrigger: {
-				trigger: reachSection,
-				pin: true,
-				scrub: 1,
-				start: "top top",
-				end: () =>
-					"+=" + (wrapper.scrollWidth - reachSection.clientWidth),
+	const totalSlides = items.length
+	const scrollTween = gsap.to(wrapper, {
+		xPercent: -100 * (totalSlides - 1),
+		ease: "none",
+
+		scrollTrigger: {
+			trigger: reachSection,
+			pin: true,
+			scrub: 1,
+			start: "top top",
+			end: () => "+=" + ((wrapper.scrollWidth - reachSection.clientWidth) + window.innerWidth * 6),
+			snap: {
+				snapTo: 1 / (totalSlides - 1), // snap to each slide
+				duration: 0.1,                 // smooth snapping duration
+				ease: "power1.inOut"
 			},
-		})
-	}, [])
+			onUpdate: (self) => {
+				const progress = Math.round(self.progress * (totalSlides - 1))
+				setCurrentSlide(progress)
+			},
+			// markers: true, // uncomment for debugging
+		},
+	})
+
+	return () => {
+		scrollTween.scrollTrigger?.kill()
+		scrollTween.kill()
+	}
+}, [])
+
 
 
 	function handleRightSlide() {
@@ -608,7 +623,7 @@ export default function Audience() {
 							ref={(el) => {
 								if (el) itemsRef.current[4] = el
 							}}
-							className="aud-reach-item lg:h-screen w-screen flex-shrink-0 grid grid-cols-2 items-center relative z-30"
+							className="aud-reach-item lg:h-screen w-screen flex-shrink-0 grid grid-cols-2 items-center  relative z-30"
 						>
 							<div className="">
 								<img
@@ -619,7 +634,7 @@ export default function Audience() {
 								/>
 							</div>
 
-							<div className="grid gap-12 relative">
+							<div className="grid gap-12 relative  lg:pr-64">
 								<div className="absolute top-0 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									YOUTUBE &<br />
 									GOOGLE DISPLAY:

@@ -89,7 +89,7 @@ export default function Mission() {
         />
       </div>
 
-      <div className="absolute left-0 bottom-0 w-full z-30 flex justify-center items-center pointer-events-none">
+      <div className="absolute left-0 bottom-0 w-full z-0 flex justify-center items-center pointer-events-none">
         <img
           loading="lazy"
           src="./missionperson.png"

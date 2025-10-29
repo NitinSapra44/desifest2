@@ -32,7 +32,7 @@ export default function Story() {
                 pin: true,
                 scrub: 1,
                 start: "top top",
-              end: () =>"+=" + ((wrapper.scrollWidth - storyContainer.current!.clientWidth) + window.innerWidth * 2.5),
+              end: () =>"+=" + ((wrapper.scrollWidth - storyContainer.current!.clientWidth) + window.innerWidth * 3),
 
                 onUpdate: (self) => {
                     // 2️⃣ Drive image rotation manually in real time
@@ -120,7 +120,7 @@ export default function Story() {
                         className="absolute left-0 bottom-0 w-full h-full object-cover"
                     />
 
-                    <div className=" max-w-[800px] ml-auto -pl-16">
+                    <div className=" max-w-[800px] ml-auto -pl-20">
                         <h2 className="flex lg:!text-[80px] text-[32px] items-center gap-4 text-white mb-8">
                             <span className="w-1.5 h-18 bg-[#FB0015]"></span>
                             not just<br/>a festival
