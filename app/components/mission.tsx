@@ -6,99 +6,98 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Mission() {
-    const missionRef = useRef<HTMLDivElement>(null)
-    const engageRef = useRef<HTMLDivElement>(null)
-    const elevateRef = useRef<HTMLDivElement>(null)
+  const missionRef = useRef<HTMLDivElement>(null)
+  const empowerRef = useRef<HTMLDivElement>(null)
+  const engageRef = useRef<HTMLDivElement>(null)
+  const elevateRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-        const outer = missionRef.current;
-        const inner = engageRef.current;
-        const inner2 = elevateRef.current;
-        if (!outer || !inner || !inner2) return;
-    
-        const ctx = gsap.context(() => {
-            // Animate first inner box (moves down 80px)
-            gsap.fromTo(
-              inner,
-              { y: 0, opacity: 0 },
-              {
-                y: window.innerWidth < 1024 ? '160px' : '220px',
-                opacity: 1,
-                duration: 1,
-                ease: "power3.out",
-                scrollTrigger: {
-                  trigger: outer,
-                  start: "top top",
-                  end: "bottom top",
-                  toggleActions: "play none none reverse",
-                },
-              }
-            );
-      
-            // Animate second inner box (moves down 150px)
-            gsap.fromTo(
-              inner2,
-              { y: 0, opacity: 0 },
-              {
-                y: window.innerWidth < 1024 ? '300px' : '420px',
-                opacity: 1,
-                duration: 1.2,
-                ease: "power3.out",
-                scrollTrigger: {
-                  trigger: outer,
-                  start: "top top",
-                  end: "bottom top",
-                  toggleActions: "play none none reverse",
-                },
-              }
-            );
-          }, outer);
-    
-        return () => ctx.revert(); // cleanup on unmount
-      }, []);
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const sections = [empowerRef.current, engageRef.current, elevateRef.current]
 
-    return (
-        <div ref={missionRef} className="py-20 lg:py-[122px] bg-foreground relative h-[80vh] lg:h-[145vh]">
-            <div className="text-text flex flex-col items-center z-20 relative">
-                <label htmlFor="mission" className=" text-base lg:text-[36px] font-normal text-text uppercase mb-8">
-                    our mission
-                </label>
+      sections.forEach((el, i) => {
+        if (!el) return
+        gsap.fromTo(
+          el,
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        )
+      })
+    }, missionRef)
 
-                <div className="relative">
-                    <div className="">
-                        <h2 className=" text-4xl lg:text-[87px] mission_text text-center mb-4">empower</h2>
+    return () => ctx.revert()
+  }, [])
 
-                        <p className="lg:text-xl text-sm font-normal text-center leading-snug max-w-[600px] text-white/75 mb-8">
-                        We elevate South Asian talent, representation, and cultural pride, bringing them to the national stage with world-class programming and a commitment to lasting impact.
-                        </p>
-                    </div>
+  return (
+    <div
+      ref={missionRef}
+      className="py-20 lg:py-[40px] bg-foreground relative min-h-[100vh] flex flex-col "
+    >
+      <div className="text-text flex flex-col items-center z-20 relative space-y-12">
+        <label
+          htmlFor="mission"
+          className="text-base lg:text-[36px] font-normal text-text uppercase mb-8"
+        >
+          our mission
+        </label>
 
-                    <div ref={engageRef} className=" absolute top-0 left-0 opacity-0 w-full">
-                        <h2 className="lg:text-[87px] text-4xl mission_text text-center mb-4">engage</h2>
-
-                        <p className="lg:text-xl text-sm font-normal text-center leading-snug max-w-[600px] text-white/75 mb-8">
-                        We engage communities and cultures through experiences that foster authentic connection.
-                        </p>
-                    </div>
-
-                    <div ref={elevateRef} className="absolute top-0 right-0 opacity-0 w-full">
-                        <h2 className="lg:text-[87px] text-4xl mission_text text-center mb-4">elevate</h2>
-
-                        <p className="lg:text-xl text-sm font-normal text-center leading-snug max-w-[600px] text-white/75 mb-8">
-                        We empower artists, newcomers, and brands by creating meaningful opportunities to collaborate, perform and grow.We elevate South Asian talent, representation, and cultural pride, bringing them to the national stage with world-class programming and a commitment to lasting impact.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div className="absolute inset-0 z-10 flex justify-center items-center">
-                <img loading="lazy" src="./mission.svg" alt="" className="w-[80%] h-auto object-cover" />
-            </div>
-
-            <div className="absolute left-0 bottom-0 w-full z-30 flex justify-center items-center">
-            <img loading="lazy" src="./missionperson.png" alt="" className=" lg:w-[90%] w-full  h-auto" />
-            </div>
-
+        {/* Empower Section */}
+        <div ref={empowerRef} className="opacity-0 flex flex-col items-center text-center max-w-[700px]">
+          <h2 className="text-4xl lg:text-[60px] mission_text mb-4">empower</h2>
+          <p className="lg:text-base text-sm font-normal text-white/75 leading-snug">
+            We elevate South Asian talent, representation, and cultural pride,
+            bringing them to the national stage with world-class programming and
+            a commitment to lasting impact.
+          </p>
         </div>
-    )
+
+        {/* Engage Section */}
+        <div ref={engageRef} className="opacity-0 flex flex-col items-center text-center max-w-[700px]">
+          <h2 className="text-4xl lg:text-[60px] mission_text mb-4">engage</h2>
+          <p className="lg:text-base text-sm font-normal text-white/75 leading-snug">
+            We engage communities and cultures through experiences that foster
+            authentic connection.
+          </p>
+        </div>
+
+        {/* Elevate Section */}
+        <div ref={elevateRef} className="opacity-0 flex flex-col items-center text-center max-w-[700px]">
+          <h2 className="text-4xl lg:text-[60px] mission_text mb-4">elevate</h2>
+          <p className="lg:text-base text-sm font-normal text-white/75 leading-snug">
+            We empower artists, newcomers, and brands by creating meaningful
+            opportunities to collaborate, perform, and grow.
+          </p>
+        </div>
+      </div>
+
+      {/* Background Elements */}
+      <div className="absolute inset-0 z-10 flex justify-center items-center pointer-events-none">
+        <img
+          loading="lazy"
+          src="./mission.svg"
+          alt=""
+          className="w-[80%] h-auto object-cover opacity-60"
+        />
+      </div>
+
+      <div className="absolute left-0 bottom-0 w-full z-30 flex justify-center items-center pointer-events-none">
+        <img
+          loading="lazy"
+          src="./missionperson.png"
+          alt=""
+          className="lg:w-[50%] w-full h-auto"
+        />
+      </div>
+    </div>
+  )
 }
