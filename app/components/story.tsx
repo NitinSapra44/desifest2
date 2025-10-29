@@ -32,7 +32,7 @@ export default function Story() {
                 pin: true,
                 scrub: 1,
                 start: "top top",
-              end: () =>"+=" + ((wrapper.scrollWidth - storyContainer.current!.clientWidth) ),
+              end: () =>"+=" + ((wrapper.scrollWidth - storyContainer.current!.clientWidth)+ window.innerWidth * 0.8 ),
                 // + window.innerWidth * 0.5
                 onUpdate: (self) => {
                     // 2️⃣ Drive image rotation manually in real time

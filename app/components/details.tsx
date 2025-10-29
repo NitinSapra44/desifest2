@@ -14,10 +14,8 @@ export default function Details() {
 	const openmicContainer = useRef<HTMLDivElement | null>(null)
 
 	useGSAP(() => {
-
 		if (window.innerWidth < 1024) return;
 		registerScrollTrigger(() => {
-
 			const container = openmicContainer.current
 			if (!container) return
 
@@ -26,6 +24,10 @@ export default function Details() {
 
 			const slidesLength = 2
 			
+			// 👇 Add extra scroll distance like Story component
+			const extraScroll = window.innerWidth * 1.5
+			const totalScrollDistance = wrapper.scrollWidth - container.clientWidth + extraScroll
+			
 			gsap.to(wrapper, {
 				xPercent: -100 * (slidesLength - 1),
 				ease: 'none',
@@ -33,12 +35,11 @@ export default function Details() {
 					trigger: container,
 					pin: true,
 					scrub: 1,
-					// markers: true,
-					start: "top -20%",
-					end: () => "+=" + (wrapper.scrollWidth - container.clientWidth),
+					start: "top top", // 👈 Changed from "top -20%"
+					end: () => "+=" + totalScrollDistance, // 👈 Use calculated distance
+					anticipatePin: 1,
 				}
 			})
-
 		})
 	}, { scope: openmicContainer })
 
@@ -68,14 +69,10 @@ export default function Details() {
 		}
 	}
 
-
     useEffect(() => {
-        // Ensure sectionRef is available
         if (!sectionRef.current) return;
 
-        // Scoped GSAP context for Next.js safety
         const ctx = gsap.context(() => {
-          // Select all .detail-box elements within this section only
           const boxes = sectionRef.current?.querySelectorAll<HTMLElement>(".detail-box");
           if (!boxes) return;
     
@@ -83,10 +80,8 @@ export default function Details() {
             const content = box.querySelector<HTMLElement>(".detail-box-content");
             if (!content) return;
     
-            // 🟡 1️⃣ Set initial state (off-screen to right)
             gsap.set(content, { x: 1000 });
     
-            // 🟢 2️⃣ Animate when it comes into view
             gsap.to(content, {
               x: 0,
               duration: 0.8,
@@ -97,19 +92,16 @@ export default function Details() {
                 start: "top center", 
                 end: "+=800",
                 toggleActions: "play none none none",
-                // markers: false,
               },
             });
-
           });
     
-          // 🟣 3️⃣ Fix early trigger issues (refresh after layout/images)
           const refresh = () => ScrollTrigger.refresh();
           window.addEventListener("load", refresh);
     
           return () => {
             window.removeEventListener("load", refresh);
-            ctx.revert(); // cleanup all triggers + animations
+            ctx.revert();
           };
         }, sectionRef);
 
@@ -120,23 +112,23 @@ export default function Details() {
 
 	return (
 		<div className="relative">
-
+			{/* 👇 CHANGED: Removed h-[80vh] lg:h-[130vh] from slides */}
 			<div ref={openmicContainer} className="relative overflow-hidden">
-				<div className="grid openmic-wrapper grid-flow-col auto-cols-[100vw] ">
+				<div className="grid openmic-wrapper grid-flow-col auto-cols-[100vw]">
 					<div
 						ref={(el) => {
 							if (el) itemsRef.current[0] = el
 						}}
-						className="lg:pt-[164px] lg:pb-[240px] py-20 h-[80vh] lg:h-[130vh] bg-foreground relative"
+						className="h-screen py-12 lg:py-16 bg-foreground relative flex flex-col"
 					>
-						<div className="relative flex justify-center items-center">
-							<h2 className=" text-center text-4xl lg:text-[100px] text-white leading-[84%]">
+						<div className="relative flex justify-center items-center flex-shrink-0">
+							<h2 className="text-center text-3xl lg:text-[80px] text-white leading-[84%]">
 								openmic
 								<br />
 								jam sessions
 							</h2>
 
-							<h2 className="absolute top-4 translate-x-1 jam-sessions text-center text-4xl lg:text-[100px] text-white leading-[84%]">
+							<h2 className="absolute top-4 translate-x-1 jam-sessions text-center text-3xl lg:text-[80px] text-white leading-[84%]">
 								openmic
 								<br />
 								jam sessions
@@ -147,25 +139,25 @@ export default function Details() {
 							loading="lazy"
 							src="./singers.png"
 							alt=""
-							className="w-[60%] lg:-mt-44 -mt-12 z-10 relative mx-auto h-auto"
+							className="w-[50%] lg:w-[45%] -mt-8 lg:-mt-12 z-10 relative mx-auto h-auto flex-shrink-0"
 						/>
 
 						<img
 							loading="lazy"
 							src="./rect1.svg"
 							alt=""
-							className="absolute bottom-0 left-0 h-[45vh] w-screen lg:w-full object-cover object-bottom lg:h-auto z-40"
+							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover object-bottom lg:h-[40vh] z-40"
 						/>
 
 						<img
 							loading="lazy"
 							src="./rect2.svg"
 							alt=""
-							className="absolute bottom-0 right-0 h-[45vh] w-screen lg:w-full object-cover object-top lg:h-auto z-40"
+							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover object-top lg:h-[40vh] z-40"
 						/>
 
-						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-12">
-							<p className="lg:text-xl text-sm font-normal">
+						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-6 lg:py-10 overflow-y-auto max-h-[40vh]">
+							<p className="lg:text-lg text-xs font-normal leading-snug">
 								With the JUNO Awards now recognizing South Asian
 								artists and immigration bringing new global
 								talent to Canada, our mission has never been
@@ -178,7 +170,7 @@ export default function Details() {
 								proudly presented the only 100% Canadian lineup
 								of South Asian artists in the country. OpenMic
 								is how we discover and nurture these voices —
-								ensuring Canada’s next generation of musicians,
+								ensuring Canada's next generation of musicians,
 								singers, DJs, poets, and spoken word artists are
 								ready for the spotlight.
 							</p>
@@ -189,10 +181,10 @@ export default function Details() {
 						ref={(el) => {
 							if (el) itemsRef.current[1] = el
 						}}
-						className="lg:pt-[164px] lg:pb-[240px] py-20 bg-foreground h-[80vh] lg:h-[130vh] relative"
+						className="h-screen py-12 lg:py-16 bg-foreground relative flex flex-col"
 					>
-						<div className="relative flex justify-center items-center">
-							<h2 className=" text-center text-4xl lg:text-[84px] text-white leading-[90%]">
+						<div className="relative flex justify-center items-center flex-shrink-0">
+							<h2 className="text-center text-3xl lg:text-[70px] text-white leading-[90%]">
 								MORE ARTISTS
 								<br />
 								MORE ACTIVATIONS
@@ -205,25 +197,25 @@ export default function Details() {
 							loading="lazy"
 							src="./singers2.png"
 							alt=""
-							className="w-[80%] lg:-mt-36 -mt-12 z-10 relative mx-auto h-auto"
+							className="w-[70%] lg:w-[60%] -mt-8 lg:-mt-12 z-10 relative mx-auto h-auto flex-shrink-0"
 						/>
 
 						<img
 							loading="lazy"
 							src="./rect1.svg"
 							alt=""
-							className="absolute bottom-0 left-0 h-[45vh] w-screen lg:w-full object-cover lg:h-auto z-40"
+							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[40vh] z-40"
 						/>
 
 						<img
 							loading="lazy"
 							src="./rect2.svg"
 							alt=""
-							className="absolute bottom-0 right-0 h-[45vh] w-screen lg:w-full object-cover lg:h-auto z-40"
+							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[40vh] z-40"
 						/>
 
-						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-12">
-							<p className="lg:text-xl text-sm font-normal">
+						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-6 lg:py-10 overflow-y-auto max-h-[40vh]">
+							<p className="lg:text-lg text-xs font-normal leading-snug">
 								With the JUNO Awards now recognizing South Asian
 								artists and immigration bringing new global
 								talent to Canada, our mission has never been
@@ -236,66 +228,13 @@ export default function Details() {
 								proudly presented the only 100% Canadian lineup
 								of South Asian artists in the country. OpenMic
 								is how we discover and nurture these voices —
-								ensuring Canada’s next generation of musicians,
+								ensuring Canada's next generation of musicians,
 								singers, DJs, poets, and spoken word artists are
 								ready for the spotlight.
 							</p>
 						</div>
 					</div>
 				</div>
-
-				{/* <div className=" absolute bottom-80 right-16 z-40">
-					<div className="flex items-center gap-6">
-						<button
-							type="button"
-							onClick={handleLeft}
-							className={`flex-none w-16 h-16 ${
-								currentReach !== 0
-									? "bg-accent"
-									: "bg-[#060608]"
-							} flex items-center justify-center text-text`}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="size-6"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M15.75 19.5 8.25 12l7.5-7.5"
-								/>
-							</svg>
-						</button>
-						<button
-							type="button"
-							onClick={handleRight}
-							className={`flex-none w-16 h-16 ${
-								currentReach !== 1
-									? "bg-accent"
-									: "bg-[#060608]"
-							} flex items-center justify-center text-text`}
-						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="size-6"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="m8.25 4.5 7.5 7.5-7.5 7.5"
-								/>
-							</svg>
-						</button>
-					</div>
-				</div> */}
 			</div>
 
 			<div className="bg-black lg:h-[280px] flex items-end justify-center relative">
@@ -322,10 +261,9 @@ export default function Details() {
 					show details
 				</h2>
 
-				<div  className=" max-w-[800px] mx-auto">
-
-                    <div className=" detail-box relative mb-24">
-                        <div className="grid grid-cols-3 gap-6 text-white items-center lg:mb-12 mb-6 ">
+				<div className="max-w-[800px] mx-auto">
+                    <div className="detail-box relative mb-24">
+                        <div className="grid grid-cols-3 gap-6 text-white items-center lg:mb-12 mb-6">
                             <div className="h-[0.5px] bg-white"></div>
                             <p className="px-8 font-bold lg:text-[40px] text-base font-heading uppercase text-center flex items-center justify-center relative">
                                 <img
@@ -342,15 +280,13 @@ export default function Details() {
                             <p className="lg:text-3xl text-base font-bold bg-[#060608]/50 px-6 py-2">7pm - 10pm</p>
                             <h4 className="lg:text-[32px] text-lg font-bold font-heading">Evening showcase</h4>
                             <p className="text-sm lg:text-3xl text-center">
-                            19+ International artist for a ticketed event
+                            19+ International artist for a ticketed event
                             </p>
                         </div>
                     </div>
 
-
-                    {/* second */}
-                    <div className=" detail-box relative mb-24 ">
-                        <div className="grid grid-cols-3 gap-6 text-white items-center lg:mb-12 mb-6  ">
+                    <div className="detail-box relative mb-24">
+                        <div className="grid grid-cols-3 gap-6 text-white items-center lg:mb-12 mb-6">
                             <div className="h-[0.5px] bg-white"></div>
                             <p className="px-8 font-bold lg:text-[40px] text-base font-heading uppercase text-center flex items-center justify-center relative">
                                 <img
@@ -373,10 +309,8 @@ export default function Details() {
                         </div>
                     </div>
 
-
-                    {/* third */}
-                    <div className=" detail-box relative lg:mb-24 mb-8">
-                        <div className="grid grid-cols-3 gap-6 text-white items-center lg:mb-12 mb-6  ">
+                    <div className="detail-box relative lg:mb-24 mb-8">
+                        <div className="grid grid-cols-3 gap-6 text-white items-center lg:mb-12 mb-6">
                             <div className="h-[0.5px] bg-white"></div>
                             <p className="px-8 font-bold lg:text-[40px] text-base font-heading uppercase text-center flex items-center justify-center relative">
                                 <img
@@ -415,7 +349,6 @@ export default function Details() {
                             </div>
                         </div>
                     </div>
-
 				</div>
 			</section>
 
@@ -443,11 +376,11 @@ export default function Details() {
 						LOYALTY.
 					</p>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2  items-center py-6">
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-center py-6">
 						<div className="relative py-2">
 							<img
 								src="./textbg.svg"
-								className=" w-full h-32 object-cover z-10"
+								className="w-full h-32 object-cover z-10"
 								alt=""
 							/>
 							<div className="absolute z-20 inset-0 flex text-center items-center justify-center uppercase text-base lg:text-xl font-bold font-heading">
@@ -456,16 +389,16 @@ export default function Details() {
 							</div>
 						</div>
 						<p className="lg:text-xl text-sm px-6">
-							Align your brand with the festival’s central
+							Align your brand with the festival's central
 							performance space.
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2  items-center py-6 border-t border-[#AB1218]">
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-center py-6 border-t border-[#AB1218]">
 						<div className="relative py-2">
 							<img
 								src="./textbg.svg"
-								className=" w-full h-32 object-cover z-10"
+								className="w-full h-32 object-cover z-10"
 								alt=""
 							/>
 							<div className="absolute z-20 inset-0 flex text-center items-center justify-center uppercase text-base lg:text-xl font-bold font-heading">
@@ -478,11 +411,11 @@ export default function Details() {
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2  items-center py-6 border-t border-[#AB1218]">
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-center py-6 border-t border-[#AB1218]">
 						<div className="relative py-2">
 							<img
 								src="./textbg.svg"
-								className=" w-full h-32 object-cover z-10"
+								className="w-full h-32 object-cover z-10"
 								alt=""
 							/>
 							<div className="absolute z-20 inset-0 flex items-center justify-center uppercase text-base lg:text-xl font-bold font-heading">
@@ -494,11 +427,11 @@ export default function Details() {
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2  items-center py-6 border-t border-[#AB1218]">
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-center py-6 border-t border-[#AB1218]">
 						<div className="relative py-2">
 							<img
 								src="./textbg.svg"
-								className=" w-full h-32 object-cover z-10"
+								className="w-full h-32 object-cover z-10"
 								alt=""
 							/>
 							<div className="absolute z-20 inset-0 flex text-center items-center justify-center uppercase text-base lg:text-xl font-bold font-heading">
@@ -511,11 +444,11 @@ export default function Details() {
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2  items-center py-6 border-t border-[#AB1218]">
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-center py-6 border-t border-[#AB1218]">
 						<div className="relative py-2">
 							<img
 								src="./textbg.svg"
-								className=" w-full h-32 object-cover z-10"
+								className="w-full h-32 object-cover z-10"
 								alt=""
 							/>
 							<div className="absolute z-20 inset-0 flex text-center items-center justify-center uppercase text-base lg:text-xl font-bold font-heading">
@@ -528,11 +461,11 @@ export default function Details() {
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 lg:grid-cols-2  items-center py-6 border-t border-[#AB1218]">
+					<div className="grid grid-cols-1 lg:grid-cols-2 items-center py-6 border-t border-[#AB1218]">
 						<div className="relative py-2">
 							<img
 								src="./textbg.svg"
-								className=" w-full h-32 object-cover z-10"
+								className="w-full h-32 object-cover z-10"
 								alt=""
 							/>
 							<div className="absolute z-20 inset-0 flex text-center items-center justify-center uppercase text-base lg:text-xl font-bold font-heading">

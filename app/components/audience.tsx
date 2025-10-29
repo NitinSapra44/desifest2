@@ -105,7 +105,7 @@ useEffect(() => {
 			pin: true,
 			scrub: 1,
 			start: "top top",
-			end: () => "+=" + ((wrapper.scrollWidth - reachSection.clientWidth)),
+			end: () => "+=" + ((wrapper.scrollWidth - reachSection.clientWidth)+ window.innerWidth * 0.8),
 
 			//  + window.innerWidth * 2
 			snap: {
