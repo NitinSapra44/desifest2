@@ -94,7 +94,7 @@ export default function Mission() {
           loading="lazy"
           src="./missionperson.png"
           alt=""
-          className="lg:w-[70%] w-full h-auto"
+          className="lg:w-[60%] w-full h-auto"
         />
       </div>
     </div>
