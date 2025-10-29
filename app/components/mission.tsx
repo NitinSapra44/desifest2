@@ -74,8 +74,7 @@ export default function Mission() {
         <div ref={elevateRef} className="opacity-0 flex flex-col items-center text-center max-w-[700px]">
           <h2 className="text-4xl lg:text-[60px] mission_text mb-4">elevate</h2>
           <p className="lg:text-base text-sm font-normal text-white/75 leading-snug">
-            We empower artists, newcomers, and brands by creating meaningful
-            opportunities to collaborate, perform, and grow.
+            We empower artists, newcomers, and brands by creating meaningful opportunities to collaborate, perform and grow.We elevate South Asian talent, representation, and cultural pride, bringing them to the national stage with world-class programming and a commitment to lasting impact.
           </p>
         </div>
       </div>
