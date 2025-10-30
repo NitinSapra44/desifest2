@@ -41,7 +41,7 @@ export default function Mission() {
   return (
     <div
       ref={missionRef}
-      className="py-20 lg:py-[40px] bg-foreground relative min-h-[70vh] lg:min-h-[100vh] flex flex-col "
+      className="py-20 lg:py-[40px] bg-foreground relative min-h-[85vh] lg:min-h-[100vh] flex flex-col "
     >
       <div className="text-text flex flex-col items-center z-20 relative space-y-4 lg:space-y-2">
         <label

@@ -179,7 +179,7 @@ export default function Section2() {
 					onTouchEnd={handleTouchEnd}
 				>
 					{/* Prev Button */}
-					<button
+					{/* <button
 						onClick={handlePrev}
 						disabled={currentIndex === 0}
 						className={`absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-none transition-all ${
@@ -190,10 +190,10 @@ export default function Section2() {
 						aria-label="Previous"
 					>
 						<ChevronLeft size={28} strokeWidth={3} />
-					</button>
+					</button> */}
 
 					{/* Next Button */}
-					<button
+					{/* <button
 						onClick={handleNext}
 						disabled={currentIndex >= yearRanges.length - 1}
 						className={`absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-none transition-all ${
@@ -204,7 +204,7 @@ export default function Section2() {
 						aria-label="Next"
 					>
 						<ChevronRight size={28} strokeWidth={3} />
-					</button>
+					</button> */}
 
 					{/* 2x2 Grid */}
 					<div className="grid grid-cols-2 gap-4">

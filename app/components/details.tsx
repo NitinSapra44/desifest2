@@ -219,14 +219,14 @@ export default function Details() {
 										loading="lazy"
 										src="./rect1.svg"
 										alt=""
-										className="absolute bottom-0 left-0 h-[25vh] w-full object-cover object-bottom z-40"
+										className="absolute bottom-0 left-0 h-[35vh] w-full object-cover object-bottom z-40"
 									/>
 
 									<img
 										loading="lazy"
 										src="./rect2.svg"
 										alt=""
-										className="absolute bottom-0 right-0 h-[25vh] w-full object-cover object-top z-40"
+										className="absolute bottom-0 right-0 h-[35vh] w-full object-cover object-top z-40"
 									/>
 
 									<div className="relative z-50 text-white/75 w-full px-6 py-6">
@@ -242,14 +242,14 @@ export default function Details() {
 
 				{/* Carousel Controls */}
 				<div className="absolute bottom-8 left-0 right-0 z-50 flex items-center justify-center gap-4">
-					{/* <button
+					<button
 						onClick={handlePrev}
 						disabled={currentSlide === 0}
 						className="bg-white/20 backdrop-blur-sm p-2 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
 						aria-label="Previous slide"
 					>
-						<ChevronLeft className="w-6 h-6 text-white" />
-					</button> */}
+						<ChevronLeft className="w-4 h-4 text-white" />
+					</button>
 
 					<div className="flex gap-2">
 						{slideContent.map((_, index) => (
@@ -257,21 +257,21 @@ export default function Details() {
 								key={index}
 								onClick={() => setCurrentSlide(index)}
 								className={`h-2 rounded-full transition-all ${
-									currentSlide === index ? 'w-4 bg-white' : 'w-2 bg-white/40'
+									currentSlide === index ? 'w- bg-white' : 'w-2 bg-white/40'
 								}`}
 								aria-label={`Go to slide ${index + 1}`}
 							/>
 						))}
 					</div>
 
-					{/* <button
+					<button
 						onClick={handleNext}
 						disabled={currentSlide === 1}
 						className="bg-white/20 backdrop-blur-sm p-2 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
 						aria-label="Next slide"
 					>
-						<ChevronRight className="w-6 h-6 text-white" />
-					</button> */}
+						<ChevronRight className="w-4 h-4 text-white" />
+					</button>
 				</div>
 			</div>
 
