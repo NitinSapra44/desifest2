@@ -1,243 +1,104 @@
 "use client"
-import { useEffect, useRef, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { ScrollToPlugin } from "gsap/ScrollToPlugin"
-import { useGSAP } from "@gsap/react"
-
-// Register the plugin
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
+import { useRef } from "react"
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 export default function Section2() {
-	const section2Ref = useRef<HTMLDivElement | null>(null)
-	const wrapperRef = useRef<HTMLDivElement | null>(null)
-	const scrollTriggerRef = useRef<ScrollTrigger | null>(null)
-	const [isPinned, setIsPinned] = useState(false)
-	const [isMobile, setIsMobile] = useState(false)
-	useGSAP(() => {
+    const sectionRef = useRef<HTMLDivElement | null>(null)
+    // Timeline data with years
+    const years = Array.from({ length: 19 }, (_, i) => 2007 + i)
+    
+    return (
+        <div ref={sectionRef} className="relative py-20 lg:py-32 overflow-hidden">
+            {/* Header */}
+            <div className="container mx-auto px-6 lg:px-12 mb-16">
+                <h1 className="text-white text-5xl lg:text-7xl font-bold mb-4 uppercase tracking-wider">
+                    A WALL OF MEMORIES
+                </h1>
+                <p className="text-white/80 text-xl lg:text-2xl">One Year at a Time</p>
+            </div>
 
-		console.log('i am here', window.innerWidth)
-		setIsMobile(window.innerWidth < 1024)
+            {/* Desktop Grid - 5 columns */}
+            <div className="hidden lg:block container mx-auto px-6 lg:px-12">
+                <div className="grid grid-cols-5 gap-6 lg:gap-8">
+                    {years.map((year, i) => (
+                        <YearCard key={year} year={year} index={i} />
+                    ))}
+                </div>
+            </div>
 
-		const section = section2Ref.current
-		if (!section) return
+            {/* Mobile Horizontal Scroll Grid - 2 columns showing 8 cards at a time */}
+            <div className="lg:hidden px-6">
+                <ScrollArea className="w-full">
+                    <div className="grid grid-cols-2 grid-rows-4 grid-flow-col gap-4 pb-4">
+                        {years.map((year, i) => (
+                            <div 
+                                key={year}
+                                className="w-[42vw]"
+                                style={{
+                                    animation: `fadeInUp 0.6s ease-out forwards ${i * 0.05}s`,
+                                    opacity: 0
+                                }}
+                            >
+                                <YearCard year={year} index={i} />
+                            </div>
+                        ))}
+                    </div>
+                    <ScrollBar orientation="horizontal" />
+                </ScrollArea>
+            </div>
 
-		const wrapper = section.querySelector(
-			".year-wrapper"
-		) as HTMLDivElement | null
-		if (!wrapper) return
+            {/* Background */}
+            <div className="absolute inset-0 z-[-2] bg-[#9b1207]"></div>
+            <img
+                loading="lazy"
+                src="./section2bg.png"
+                className="absolute bottom-0 left-0 z-[-1] w-full opacity-50 blur-[10.6px] mix-blend-color-burn"
+                alt=""
+            />
+            
+            <style jsx>{`
+                @keyframes fadeInUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `}</style>
+        </div>
+    )
+}
 
-		wrapperRef.current = wrapper
-
-		if (window.innerWidth < 1024) return;
-		const teamMembers = section.querySelectorAll(".year-member")
-
-		// horizontal scroll animation
-		gsap.to(wrapper, {
-			xPercent: -80 * (teamMembers.length - 1),
-			ease: "none",
-			scrollTrigger: {
-				trigger: section,
-				pin: true,
-				scrub: 1,
-				start: "top top",
-				// dynamically calculate correct scroll distance
-				end: () => "+=" + (wrapper.scrollWidth - section.clientWidth),
-				onUpdate: (self) => {
-					scrollTriggerRef.current = self
-					// Check if section is pinned
-					setIsPinned(self.isActive && self.progress > 0)
-				}
-			},
-		})
-
-	}, [section2Ref])
-
-	// Function to scroll to specific year
-	const scrollToYear = (year: number) => {
-
-		console.log('isMobile', isMobile, wrapperRef.current, section2Ref.current)
-		if (!wrapperRef.current) return
-		
-		// For mobile, animate the scroll position
-		if (isMobile) {
-			// Calculate which index the year corresponds to
-			let targetIndex = 0
-			if (year === 2007) {
-				targetIndex = 0 // 2007 is index 0
-			} else if (year === 2012) {
-				targetIndex = 5 // 2012 is index 5 (2007 + 5 = 2012)
-			} else if (year === 2017) {
-				targetIndex = 10 // 2017 is index 10 (2007 + 10 = 2017)
-			} else if (year === 2022) {
-				targetIndex = 15 // 2022 is index 15 (2007 + 15 = 2022)
-			}
-			
-			// Calculate scroll position (100vw per item on mobile)
-			const targetScrollLeft = targetIndex * window.innerWidth
-			
-			// Animate the scroll position for mobile
-			gsap.to(wrapperRef.current, {
-				scrollLeft: targetScrollLeft,
-				duration: 0.5,
-				ease: "power2.out"
-			})
-			return
-		}
-		
-		// For desktop with ScrollTrigger
-		if (!scrollTriggerRef.current) return
-		
-		const section = section2Ref.current
-		if (!section) return
-		const teamMembers = section.querySelectorAll(".year-member")
-		
-		// Calculate which index the year corresponds to
-		let targetIndex = 0
-		if (year === 2007) {
-			targetIndex = 0 // 2007 is index 0
-		} else if (year === 2012) {
-			targetIndex = 5 // 2012 is index 5 (2007 + 5 = 2012)
-		} else if (year === 2017) {
-			targetIndex = 10 // 2017 is index 10 (2007 + 10 = 2017)
-		} else if (year === 2022) {
-			targetIndex = 15 // 2022 is index 15 (2007 + 15 = 2022)
-		}
-		
-		// Calculate the target progress (0 to 1)
-		const totalItems = teamMembers.length
-		let targetProgress = targetIndex / (totalItems - 1)
-		if (targetProgress === 0) targetProgress = 0.001
-		
-		// Get the ScrollTrigger instance
-		const scrollTrigger = scrollTriggerRef.current
-		
-		// Calculate the target scroll position within the ScrollTrigger range
-		const start = scrollTrigger.start
-		const end = scrollTrigger.end
-		const totalScrollDistance = end - start
-		const targetScrollPosition = start + (totalScrollDistance * targetProgress)
-		
-		// Scroll to the target position - this will trigger the existing ScrollTrigger animation
-		// Use GSAP for faster, more controlled animation
-		gsap.to(window, {
-			scrollTo: { y: targetScrollPosition },
-			duration: 0.01,
-			ease: "none"
-		})
-	}
-
-	return (
-		<div ref={section2Ref} className="lg:h-screen  relative overflow-hidden py-20 lg:py-0 ">
-			{/* Navigation buttons - only show when pinned */}
-			{(isPinned || isMobile) && (
-				<div className="absolute top-6 left-0 lg:left-1/2 w-full lg:w-fit  lg:-translate-x-1/2 z-50 flex lg:gap-4 gap-2 justify-center lg:max-w-4xl">
-					<button
-						onClick={() => scrollToYear(2007)}
-						className="bg-white/25 backdrop-blur-sm text-xs lg:text-base text-white px-1 lg:px-3 py-1 border border-white/30 hover:bg-white/30 transition-all duration-300 font-medium "
-					>
-						2007-2011
-					</button>
-					<button
-						onClick={() => scrollToYear(2012)}
-						className="bg-white/25 backdrop-blur-sm text-xs lg:text-base text-white px-3 py-1 border border-white/30 hover:bg-white/30 transition-all duration-300 font-medium "
-					>
-						2012-2016
-					</button>
-					<button
-						onClick={() => scrollToYear(2017)}
-						className="bg-white/25 backdrop-blur-sm text-xs lg:text-base text-white px-3 py-1 border border-white/30 hover:bg-white/30 transition-all duration-300 font-medium "
-					>
-						2017-2021
-					</button>
-					<button
-						onClick={() => scrollToYear(2022)}
-						className="bg-white/25 backdrop-blur-sm text-xs lg:text-base text-white px-3 py-1 border border-white/30 hover:bg-white/30 transition-all duration-300 font-medium "
-					>
-						2022-2026
-					</button>
-				</div>
-			)}
-
-			<div className="year-wrapper z-30 relative flex h-full w-auto overflow-x-scroll scrollbar-hidden lg:overflow-visible">
-				{[...Array(19)].map((_, i) => (
-					<div
-						key={i}
-						className="year-member relative z-20 lg:h-screen flex flex-col items-center pt-20 lg:pt-[150px] pb-16 gap-[48px] lg:gap-[152px] w-[100vw] lg:w-[80vw] flex-shrink-0"
-					>
-						<h2 className="text-white text-center flex justify-center items-center w-full  relative">
-							{2007 + i}
-							<img
-								src="./line.svg"
-								alt=""
-								className="absolute w-[50vw] flex-none   translate-x-[80%]"
-							/>
-						</h2>
-
-						<img
-							src="./hero/line.svg"
-							className="absolute hidden lg:block bottom-1/2 translate-y-24 translate-x-1/2 opacity-60 left-0 z-10 w-full h-3 object-cover"
-							alt=""
-						/>
-
-						<div className="relative group z-20">
-							<img
-								src={`./timeline/${2007 + i}.png`}
-								loading="lazy"
-								alt=""
-								className=" relative w-[80vw] lg:w-[400px]  h-auto object-cover z-20"
-							/>
-							<img
-								src="./hero/bgimage.png"
-								loading="lazy"
-								alt=""
-								className=" group-hover:rotate-[15deg] transition-all custom-time-effect duration-500 origin-top-left  group-hover:-translate-x-1/2 group-hover:translate-y-8  absolute w-[400px]  h-auto inset-0 z-10"
-							/>
-							<img
-								src="./hero/bgimage2.png"
-								loading="lazy"
-								alt=""
-								className="group-hover:rotate-[-15deg] transition-all custom-time-effect duration-500 origin-top-right  group-hover:translate-x-1/2 group-hover:translate-y-8  absolute w-[400px]  h-auto inset-0 z-10"
-							/>
-						</div>
-					</div>
-				))}
-
-				<div className="  year-member relative z-20 lg:h-screen flex flex-col pt-20 lg:pt-[150px] pl-[32vw] pb-16 gap-[48px] w-[100vw] lg:w-[80vw] flex-shrink-0">
-					<h2 className="text-white flex items-center w-full  relative">
-						2026
-						<img
-							src="./line.svg"
-							alt=""
-							className="absolute w-[50vw] flex-none   translate-x-[80%]"
-						/>
-					</h2>
-
-					<img
-						src="./hero/line.svg"
-						className="absolute hidden lg:block bottom-1/2 translate-y-24 translate-x-1/2 opacity-60 left-0 z-10 w-full h-3 object-cover"
-						alt=""
-					/>
-
-					<div className="relative group z-20">
-						<p className="absolute lg:block lg:text-4xl text-base text-white max-w-[800px]">
-							In 2026, we celebrate two decades of music, culture,
-							and unity. This isn’t just another festival year —
-							it’s a milestone moment to honour our journey and
-							amplify what’s next.
-						</p>
-					</div>
-				</div>
-			</div>
-
-			<div className="absolute inset-0 z-10 bg-[#9b1207]"></div>
-
-			<img
-				loading="lazy"
-				src="./section2bg.png"
-				className="absolute bottom-0 left-0  z-20 w-full opacity-50 blur-[10.6] mix-blend-color-burn"
-				alt=""
-			/>
-		</div>
-	)
+// Extracted YearCard component for reusability
+function YearCard({ year, index }: { year: number; index: number }) {
+    return (
+        <div className="relative group cursor-pointer h-full">
+            {/* Card with hover effect */}
+            <div className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-2xl transform transition-all duration-500 hover:scale-105 hover:rotate-2 hover:shadow-3xl">
+                <img
+                    src={`./timeline/${year}.png`}
+                    loading="lazy"
+                    alt={`Year ${year}`}
+                    className="w-full h-full object-cover"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-300"></div>
+                {/* Year label */}
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <h3 className="text-white text-3xl lg:text-4xl font-bold drop-shadow-lg">
+                        {year}
+                    </h3>
+                </div>
+                {/* Corner accent - top left */}
+                <div className="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Corner accent - bottom right */}
+                <div className="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            {/* Decorative corner fold effect */}
+            <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-red-900 to-red-950 opacity-50 transform rotate-45 group-hover:scale-150 transition-transform duration-300"></div>
+        </div>
+    )
 }
