@@ -70,8 +70,10 @@ export default function Section2() {
 				src="/section2bg.png"
 				alt="Section background"
 				loading="lazy"
-				className="absolute bottom-0 left-0 z-[-1] w-full lg:h-[600px] h-[300px] object-cover opacity-50 blur-[10px] mix-blend-color-burn"
+				className="absolute bottom-0 left-0 z-[-1] w-full lg:h-[400px] h-[350px] object-cover opacity-60  mix-blend-color-burn "
 			/>
+
+			{/* opacity-100 blur-[50px] mix-blend-color-burn */}
 
 			{/* ===== Header ===== */}
 			<div className="container mx-auto px-6 lg:pl-24 mb-10 lg:mb-16">
@@ -162,8 +164,8 @@ export default function Section2() {
 							onClick={() => handleRangeChange(idx)}
 							className={`px-1 py-1 rounded border-2 whitespace-nowrap transition-all font-medium ${
 								currentIndex === idx
-									? "bg-white/20 border-white text-white text-xs"
-									: "bg-transparent border-white/40 text-white/70 text-xs"
+									? "bg-black/20 border-white text-white text-xs"
+									: "bg-[#FFFFFF29] border-white/40 text-white/70 text-xs"
 							}`}
 						>
 							{range.label}
