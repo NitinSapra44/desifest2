@@ -136,7 +136,7 @@ export default function Details() {
 							ref={(el) => {
 								if (el) itemsRef.current[index] = el
 							}}
-							className="min-h-screen py-8 lg:py-16 bg-foreground relative flex flex-col justify-between"
+							className="min-h-screen py-8 lg:py-1 bg-foreground relative flex flex-col justify-between"
 						>
 							<div className="relative flex justify-center items-center flex-shrink-0">
 								<h2 className={`text-center ${index === 0 ? 'text-3xl lg:text-[80px]' : 'text-3xl lg:text-[70px]'} text-white leading-[${index === 0 ? '84%' : '90%'}]`}>
@@ -229,8 +229,8 @@ export default function Details() {
 										className="absolute bottom-0 right-0 h-[35vh] w-full object-cover object-top z-40"
 									/>
 
-									<div className="relative z-50 text-white/75 w-full px-6 py-6">
-										<p className="text-xs font-normal leading-snug">
+									<div className="relative z-50 text-white/75 w-full px-6 py-6 lg:py-10">
+										<p className="text-xs font-normal leading-snug ">
 											{slide.text}
 										</p>
 									</div>

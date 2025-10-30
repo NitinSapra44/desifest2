@@ -102,7 +102,7 @@ export default function Section2() {
 												'linear-gradient(135deg, rgba(134,10,0,0.9), rgba(155,18,7,0.7))',
 										}}
 									>
-										<p className="text-white/80 text-base leading-snug">
+										<p className="text-white/80 text-sm leading-snug">
 											"We can't wait to celebrate our 20th Desifest and mark this milestone on our wall and elevate our journey together!"
 										</p>
 									</div>
@@ -155,15 +155,15 @@ export default function Section2() {
 			{/* ===== Mobile Version ===== */}
 			<div className="lg:hidden">
 				{/* Range buttons */}
-				<div className="px-2 mb-8 flex gap-1 overflow-x-auto pb-2">
+				<div className="px-2 mb-8 flex gap-1  pb-2">
 					{yearRanges.map((range, idx) => (
 						<button
 							key={idx}
 							onClick={() => handleRangeChange(idx)}
-							className={`px-1 py-2 rounded border-2 whitespace-nowrap transition-all font-medium ${
+							className={`px-1 py-1 rounded border-2 whitespace-nowrap transition-all font-medium ${
 								currentIndex === idx
-									? "bg-white/20 border-white text-white text-sm"
-									: "bg-transparent border-white/40 text-white/70 text-sm"
+									? "bg-white/20 border-white text-white text-xs"
+									: "bg-transparent border-white/40 text-white/70 text-xs"
 							}`}
 						>
 							{range.label}
@@ -179,7 +179,7 @@ export default function Section2() {
 					onTouchEnd={handleTouchEnd}
 				>
 					{/* Prev Button */}
-					{/* <button
+					<button
 						onClick={handlePrev}
 						disabled={currentIndex === 0}
 						className={`absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-none transition-all ${
@@ -189,11 +189,11 @@ export default function Section2() {
 						}`}
 						aria-label="Previous"
 					>
-						<ChevronLeft size={28} strokeWidth={3} />
-					</button> */}
+						<ChevronLeft size={12} strokeWidth={3} />
+					</button>
 
 					{/* Next Button */}
-					{/* <button
+					<button
 						onClick={handleNext}
 						disabled={currentIndex >= yearRanges.length - 1}
 						className={`absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-none transition-all ${
@@ -203,8 +203,8 @@ export default function Section2() {
 						}`}
 						aria-label="Next"
 					>
-						<ChevronRight size={28} strokeWidth={3} />
-					</button> */}
+						<ChevronRight size={12} strokeWidth={3} />
+					</button>
 
 					{/* 2x2 Grid */}
 					<div className="grid grid-cols-2 gap-4">
