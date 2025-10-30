@@ -74,7 +74,7 @@ export default function Section2() {
 			/>
 
 			{/* ===== Header ===== */}
-			<div className="container mx-auto px-6 lg:px-12 mb-10 lg:mb-16">
+			<div className="container mx-auto px-6 lg:pl-24 mb-10 lg:mb-16">
 				<h1 className="text-white text-4xl lg:text-6xl font-bold mb-2 tracking-wider uppercase">
 					Wall of Memories
 				</h1>
@@ -82,11 +82,11 @@ export default function Section2() {
 			</div>
 
 			{/* ===== Desktop Grid ===== */}
-			<div className="hidden lg:block container mx-auto px-6 lg:px-12">
-				<div className="grid grid-cols-5 gap-6 xl:gap-8">
+			<div className="hidden lg:block container mx-auto px-6 lg:px-20">
+				<div className="grid grid-cols-5 gap-4 xl:gap-8 ">
 					{years.map((year) => (
-						<div key={year} className="relative group">
-							<div className="w-[220px] h-[220px] relative">
+						<div key={year} className="relative group hover:scale-105 transition-transform hover:-rotate-6">
+							<div className="w-[180px] h-[180px] relative">
 								{/* 2026 Special */}
 								{year === 2026 ? (
 									<div
@@ -140,7 +140,7 @@ export default function Section2() {
 								<img
 									src="/cutout.png"
 									alt="Overlay or sticker"
-									className="absolute -bottom-2 left-0 w-[70px] h-[70px] object-contain"
+									className="absolute -bottom-2 left-0 w-[60px] h-[60px] object-contain"
 								/>
 
 								<div className="absolute bottom-0 right-2 z-20">

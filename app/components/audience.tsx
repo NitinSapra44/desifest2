@@ -667,13 +667,13 @@ useEffect(() => {
 					{/* buttons mobile navigation */}
 					<div className=" lg:hidden absolute -bottom-0 left-6 z-[100]">
 						<div className="flex items-center gap-5">
-							<button onClick={handleLeftSlide} className={`flex-none size-8 ${currentSlide === 0 ? 'bg-[#060608]' : 'bg-accent'} flex items-center justify-center text-text`}>
+							<button onClick={handleLeftSlide} className={`flex-none size-8 ${currentSlide === 0 ? 'bg-[#060608]' : 'bg-[#FB0015]'} flex items-center justify-center text-text`}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
 									<path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
 								</svg>
 							</button>
 
-							<button onClick={handleRightSlide} className={`flex-none size-8 ${currentSlide !== 4 ? 'bg-accent' : 'bg-[#060608]'} flex items-center justify-center text-text`}>
+							<button onClick={handleRightSlide} className={`flex-none size-8 ${currentSlide !== 4 ? 'bg-[#FB0015]' : 'bg-[#060608]'} flex items-center justify-center text-text`}>
 								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
 									<path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 								</svg>

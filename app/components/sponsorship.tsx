@@ -262,14 +262,14 @@ export default function Sponsorship() {
       <div className="lg:hidden absolute bottom-22 left-6 z-50 flex gap-4">
         <ButtonLeft
           onClick={handleLeft}
-          className={`flex-none size-8 ${
-            currentReach !== 0 ? 'bg-accent' : 'bg-[#060608]'
+          className={`flex-none size-4 ${
+            currentReach !== 0 ? 'bg-[#fb0015]' : 'bg-[#060608]'
           } flex items-center justify-center text-text`}
         />
         <ButtonRight
           onClick={handleRight}
-          className={`flex-none size-8 ${
-            currentReach !== 2 ? 'bg-accent' : 'bg-[#060608]'
+          className={`flex-none size-4 ${
+            currentReach !== 2 ? 'bg-[#fb0015]' : 'bg-[#060608]'
           } flex items-center justify-center text-text`}
         />
       </div>

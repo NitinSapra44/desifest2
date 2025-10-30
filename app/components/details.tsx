@@ -4,12 +4,13 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useGSAP } from "@gsap/react"
 import { registerScrollTrigger } from "../lib/scroll-manager"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Details() {
 	const itemsRef = useRef<HTMLDivElement[]>([])
-	const [currentReach, setCurrentReach] = useState(0)
+	const [currentSlide, setCurrentSlide] = useState(0)
     const sectionRef = useRef<HTMLDivElement | null>(null);
 	const openmicContainer = useRef<HTMLDivElement | null>(null)
 
@@ -24,7 +25,6 @@ export default function Details() {
 
 			const slidesLength = 2
 			
-			// 👇 Add extra scroll distance like Story component
 			const extraScroll = window.innerWidth * 1.5
 			const totalScrollDistance = wrapper.scrollWidth - container.clientWidth + extraScroll
 			
@@ -35,37 +35,23 @@ export default function Details() {
 					trigger: container,
 					pin: true,
 					scrub: 1,
-					start: "top top", // 👈 Changed from "top -20%"
-					end: () => "+=" + totalScrollDistance, // 👈 Use calculated distance
+					start: "top top",
+					end: () => "+=" + totalScrollDistance,
 					anticipatePin: 1,
 				}
 			})
 		})
 	}, { scope: openmicContainer })
 
-	function handleRight() {
-		if (currentReach < 1 && itemsRef.current) {
-			itemsRef.current.forEach((item) => {
-				gsap.to(item, {
-					x: "-=100%",
-					duration: 1,
-					ease: "power3.out",
-				})
-			})
-			setCurrentReach((prev) => prev + 1)
+	function handleNext() {
+		if (currentSlide < 1) {
+			setCurrentSlide(prev => prev + 1)
 		}
 	}
 
-	function handleLeft() {
-		if (itemsRef.current && currentReach > 0) {
-			itemsRef.current.forEach((item) => {
-				gsap.to(item, {
-					x: "+=100%",
-					duration: 1,
-					ease: "power3.out",
-				})
-			})
-			setCurrentReach((prev) => prev - 1)
+	function handlePrev() {
+		if (currentSlide > 0) {
+			setCurrentSlide(prev => prev - 1)
 		}
 	}
 
@@ -110,130 +96,182 @@ export default function Details() {
         };
       }, []);
 
+	const slideContent = [
+		{
+			title: (
+				<>
+					openmic
+					<br />
+					jam sessions
+				</>
+			),
+			image: "./singers.png",
+			imageWidth: "w-[50%] lg:w-[45%]",
+			text: "With the JUNO Awards now recognizing South Asian artists and immigration bringing new global talent to Canada, our mission has never been more urgent. OpenMic by DESIFEST is our year-round artist development series — launched in Toronto, now expanding to Durham, Montreal, Vancouver, Windsor, and Hamilton in 2025/2026. Each month, 80+ artists perform, connect, and grow. Over the past two years, DESIFEST has proudly presented the only 100% Canadian lineup of South Asian artists in the country. OpenMic is how we discover and nurture these voices — ensuring Canada's next generation of musicians, singers, DJs, poets, and spoken word artists are ready for the spotlight."
+		},
+		{
+			title: (
+				<>
+					MORE ARTISTS
+					<br />
+					MORE ACTIVATIONS
+					<br />
+					MORE ENGAGEMENT
+				</>
+			),
+			image: "./singers2.png",
+			imageWidth: "w-[70%] lg:w-[60%]",
+			text: "With the JUNO Awards now recognizing South Asian artists and immigration bringing new global talent to Canada, our mission has never been more urgent. OpenMic by DESIFEST is our year-round artist development series — launched in Toronto, now expanding to Durham, Montreal, Vancouver, Windsor, and Hamilton in 2025/2026. Each month, 80+ artists perform, connect, and grow. Over the past two years, DESIFEST has proudly presented the only 100% Canadian lineup of South Asian artists in the country. OpenMic is how we discover and nurture these voices — ensuring Canada's next generation of musicians, singers, DJs, poets, and spoken word artists are ready for the spotlight."
+		}
+	]
+
 	return (
 		<div className="relative">
-			{/* 👇 CHANGED: Removed h-[80vh] lg:h-[130vh] from slides */}
-			<div ref={openmicContainer} className="relative overflow-hidden">
+			{/* Desktop: Horizontal Scroll */}
+			<div ref={openmicContainer} className="relative overflow-hidden hidden lg:block">
 				<div className="grid openmic-wrapper grid-flow-col auto-cols-[100vw]">
-					<div
-						ref={(el) => {
-							if (el) itemsRef.current[0] = el
-						}}
-						className="h-screen py-12 lg:py-16 bg-foreground relative flex flex-col"
+					{slideContent.map((slide, index) => (
+						<div
+							key={index}
+							ref={(el) => {
+								if (el) itemsRef.current[index] = el
+							}}
+							className="min-h-screen py-8 lg:py-16 bg-foreground relative flex flex-col justify-between"
+						>
+							<div className="relative flex justify-center items-center flex-shrink-0">
+								<h2 className={`text-center ${index === 0 ? 'text-3xl lg:text-[80px]' : 'text-3xl lg:text-[70px]'} text-white leading-[${index === 0 ? '84%' : '90%'}]`}>
+									{slide.title}
+								</h2>
+
+								{index === 0 && (
+									<h2 className="absolute top-4 translate-x-1 jam-sessions text-center text-3xl lg:text-[80px] text-white leading-[84%]">
+										{slide.title}
+									</h2>
+								)}
+							</div>
+
+							<img
+								loading="lazy"
+								src={slide.image}
+								alt=""
+								className={`${slide.imageWidth} -mt-4 lg:-mt-12 z-10 relative mx-auto h-auto flex-shrink-0`}
+							/>
+
+							<div className="relative flex-shrink-0 mt-auto">
+								<img
+									loading="lazy"
+									src="./rect1.svg"
+									alt=""
+									className="absolute bottom-0 left-0 h-[25vh] lg:h-[30vh] w-full object-cover object-bottom z-40"
+								/>
+
+								<img
+									loading="lazy"
+									src="./rect2.svg"
+									alt=""
+									className="absolute bottom-0 right-0 h-[25vh] lg:h-[30vh] w-full object-cover object-top z-40"
+								/>
+
+								<div className="relative z-50 text-white/75 w-full lg:px-[200px] px-6 py-6 lg:py-10">
+									<p className="lg:text-lg text-xs font-normal leading-snug">
+										{slide.text}
+									</p>
+								</div>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+
+			{/* Mobile: Carousel */}
+			<div className="lg:hidden relative bg-foreground">
+				<div className="relative overflow-hidden">
+					<div 
+						className="flex transition-transform duration-500 ease-out"
+						style={{ transform: `translateX(-${currentSlide * 100}%)` }}
 					>
-						<div className="relative flex justify-center items-center flex-shrink-0">
-							<h2 className="text-center text-3xl lg:text-[80px] text-white leading-[84%]">
-								openmic
-								<br />
-								jam sessions
-							</h2>
+						{slideContent.map((slide, index) => (
+							<div
+								key={index}
+								className="min-w-full  py-8 bg-foreground relative flex flex-col justify-between"
+							>
+								<div className="relative flex justify-center items-center flex-shrink-0 px-4">
+									<h2 className={`text-center text-3xl text-white leading-[${index === 0 ? '84%' : '90%'}]`}>
+										{slide.title}
+									</h2>
 
-							<h2 className="absolute top-4 translate-x-1 jam-sessions text-center text-3xl lg:text-[80px] text-white leading-[84%]">
-								openmic
-								<br />
-								jam sessions
-							</h2>
-						</div>
+									{index === 0 && (
+										<h2 className="absolute top-4 translate-x-1 jam-sessions text-center text-3xl text-white leading-[84%]">
+											{slide.title}
+										</h2>
+									)}
+								</div>
 
-						<img
-							loading="lazy"
-							src="./singers.png"
-							alt=""
-							className="w-[50%] lg:w-[45%] -mt-8 lg:-mt-12 z-10 relative mx-auto h-auto flex-shrink-0"
-						/>
+								<img
+									loading="lazy"
+									src={slide.image}
+									alt=""
+									className={`${slide.imageWidth} -mt-4 z-10 relative mx-auto h-auto flex-shrink-0`}
+								/>
 
-						<img
-							loading="lazy"
-							src="./rect1.svg"
-							alt=""
-							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover object-bottom lg:h-[30vh] z-40"
-						/>
+								<div className="relative flex-shrink-0 mt-auto">
+									<img
+										loading="lazy"
+										src="./rect1.svg"
+										alt=""
+										className="absolute bottom-0 left-0 h-[25vh] w-full object-cover object-bottom z-40"
+									/>
 
-						<img
-							loading="lazy"
-							src="./rect2.svg"
-							alt=""
-							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover object-top lg:h-[30vh] z-40"
-						/>
+									<img
+										loading="lazy"
+										src="./rect2.svg"
+										alt=""
+										className="absolute bottom-0 right-0 h-[25vh] w-full object-cover object-top z-40"
+									/>
 
-						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-6 lg:py-10 overflow-y-auto max-h-[40vh]">
-							<p className="lg:text-lg text-xs font-normal leading-snug">
-								With the JUNO Awards now recognizing South Asian
-								artists and immigration bringing new global
-								talent to Canada, our mission has never been
-								more urgent. OpenMic by DESIFEST is our
-								year-round artist development series — launched
-								in Toronto, now expanding to Durham, Montreal,
-								Vancouver, Windsor, and Hamilton in 2025/2026.
-								Each month, 80+ artists perform, connect, and
-								grow. Over the past two years, DESIFEST has
-								proudly presented the only 100% Canadian lineup
-								of South Asian artists in the country. OpenMic
-								is how we discover and nurture these voices —
-								ensuring Canada's next generation of musicians,
-								singers, DJs, poets, and spoken word artists are
-								ready for the spotlight.
-							</p>
-						</div>
+									<div className="relative z-50 text-white/75 w-full px-6 py-6">
+										<p className="text-xs font-normal leading-snug">
+											{slide.text}
+										</p>
+									</div>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+
+				{/* Carousel Controls */}
+				<div className="absolute bottom-8 left-0 right-0 z-50 flex items-center justify-center gap-4">
+					{/* <button
+						onClick={handlePrev}
+						disabled={currentSlide === 0}
+						className="bg-white/20 backdrop-blur-sm p-2 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+						aria-label="Previous slide"
+					>
+						<ChevronLeft className="w-6 h-6 text-white" />
+					</button> */}
+
+					<div className="flex gap-2">
+						{slideContent.map((_, index) => (
+							<button
+								key={index}
+								onClick={() => setCurrentSlide(index)}
+								className={`h-2 rounded-full transition-all ${
+									currentSlide === index ? 'w-4 bg-white' : 'w-2 bg-white/40'
+								}`}
+								aria-label={`Go to slide ${index + 1}`}
+							/>
+						))}
 					</div>
 
-					<div
-						ref={(el) => {
-							if (el) itemsRef.current[1] = el
-						}}
-						className="h-screen py-12 lg:py-16 bg-foreground relative flex flex-col"
+					{/* <button
+						onClick={handleNext}
+						disabled={currentSlide === 1}
+						className="bg-white/20 backdrop-blur-sm p-2 rounded-full disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
+						aria-label="Next slide"
 					>
-						<div className="relative flex justify-center items-center flex-shrink-0">
-							<h2 className="text-center text-3xl lg:text-[70px] text-white leading-[90%]">
-								MORE ARTISTS
-								<br />
-								MORE ACTIVATIONS
-								<br />
-								MORE ENGAGEMENT
-							</h2>
-						</div>
-
-						<img
-							loading="lazy"
-							src="./singers2.png"
-							alt=""
-							className="w-[70%] lg:w-[60%] -mt-8 lg:-mt-12 z-10 relative mx-auto h-auto flex-shrink-0"
-						/>
-
-						<img
-							loading="lazy"
-							src="./rect1.svg"
-							alt=""
-							className="absolute bottom-0 left-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[30vh] z-40"
-						/>
-
-						<img
-							loading="lazy"
-							src="./rect2.svg"
-							alt=""
-							className="absolute bottom-0 right-0 h-[35vh] w-screen lg:w-full object-cover lg:h-[30vh] z-40"
-						/>
-
-						<div className="absolute z-50 text-white/75 bottom-0 left-0 w-full lg:px-[200px] px-6 py-6 lg:py-10 overflow-y-auto max-h-[40vh]">
-							<p className="lg:text-lg text-xs font-normal leading-snug">
-								With the JUNO Awards now recognizing South Asian
-								artists and immigration bringing new global
-								talent to Canada, our mission has never been
-								more urgent. OpenMic by DESIFEST is our
-								year-round artist development series — launched
-								in Toronto, now expanding to Durham, Montreal,
-								Vancouver, Windsor, and Hamilton in 2025/2026.
-								Each month, 80+ artists perform, connect, and
-								grow. Over the past two years, DESIFEST has
-								proudly presented the only 100% Canadian lineup
-								of South Asian artists in the country. OpenMic
-								is how we discover and nurture these voices —
-								ensuring Canada's next generation of musicians,
-								singers, DJs, poets, and spoken word artists are
-								ready for the spotlight.
-							</p>
-						</div>
-					</div>
+						<ChevronRight className="w-6 h-6 text-white" />
+					</button> */}
 				</div>
 			</div>
 
