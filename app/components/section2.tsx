@@ -3,8 +3,9 @@ import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function Section2() {
-	const [currentPage, setCurrentPage] = useState(0)
-	const [activeRange, setActiveRange] = useState(0)
+	const [currentIndex, setCurrentIndex] = useState(0)
+	const [touchStart, setTouchStart] = useState(0)
+	const [touchEnd, setTouchEnd] = useState(0)
 
 	const years = Array.from({ length: 20 }, (_, i) => 2007 + i)
 	const yearRanges = [
@@ -15,19 +16,49 @@ export default function Section2() {
 		{ label: "2023-2026", start: 16, end: 20 },
 	]
 
-	const currentRangeYears = years.slice(yearRanges[activeRange].start, yearRanges[activeRange].end)
-	const totalPages = Math.ceil(currentRangeYears.length / 4)
+	const currentRangeYears = years.slice(yearRanges[currentIndex].start, yearRanges[currentIndex].end)
 
-	const handlePrevPage = () => setCurrentPage((prev) => Math.max(0, prev - 1))
-	const handleNextPage = () => setCurrentPage((prev) => Math.min(totalPages - 1, prev + 1))
-	const handleRangeChange = (index: number) => {
-		setActiveRange(index)
-		setCurrentPage(0)
+	const handlePrev = () => {
+		if (currentIndex > 0) {
+			setCurrentIndex(prev => prev - 1)
+		}
+	}
+	
+	const handleNext = () => {
+		if (currentIndex < yearRanges.length - 1) {
+			setCurrentIndex(prev => prev + 1)
+		}
 	}
 
-	const getCurrentPageYears = () => {
-		const startIdx = currentPage * 4
-		return currentRangeYears.slice(startIdx, startIdx + 4)
+	const handleRangeChange = (index) => {
+		setCurrentIndex(index)
+	}
+
+	// Swipe handlers
+	const handleTouchStart = (e) => {
+		setTouchStart(e.targetTouches[0].clientX)
+	}
+
+	const handleTouchMove = (e) => {
+		setTouchEnd(e.targetTouches[0].clientX)
+	}
+
+	const handleTouchEnd = () => {
+		if (!touchStart || !touchEnd) return
+		
+		const distance = touchStart - touchEnd
+		const isLeftSwipe = distance > 50
+		const isRightSwipe = distance < -50
+
+		if (isLeftSwipe && currentIndex < yearRanges.length - 1) {
+			handleNext()
+		}
+		if (isRightSwipe && currentIndex > 0) {
+			handlePrev()
+		}
+
+		setTouchStart(0)
+		setTouchEnd(0)
 	}
 
 	return (
@@ -71,7 +102,7 @@ export default function Section2() {
 										}}
 									>
 										<p className="text-white/80 text-base leading-snug">
-											“We can’t wait to celebrate our 20th Desifest and mark this milestone on our wall and elevate our journey together!”
+											"We can't wait to celebrate our 20th Desifest and mark this milestone on our wall and elevate our journey together!"
 										</p>
 									</div>
 								) : (
@@ -80,7 +111,7 @@ export default function Section2() {
 											src={`./timeline/${year}.png`}
 											loading="lazy"
 											alt={`Year ${year}`}
-											className="w-full h-full object-fill"
+											className="w-full h-full object-cover"
 											style={{
 												WebkitMaskImage: 'url(/MemoryWall.png)',
 												WebkitMaskRepeat: 'no-repeat',
@@ -90,11 +121,10 @@ export default function Section2() {
 												maskSize: 'cover',
 											}}
 										/>
-										{/* Overlay */}
 										<div
-											className="absolute inset-0 pointer-events-none"
+											className="absolute inset-0"
 											style={{
-												background: `radial-gradient(circle at 80% 90%, rgba(134,10,0,0.9) 0%, rgba(134,10,0,0.6) 35%, rgba(134,10,0,0.3) 60%, transparent 75%)`,
+												background: `linear-gradient(to bottom right, transparent 20%, #6C070B 100%)`,
 												WebkitMaskImage: 'url(/MemoryWall.png)',
 												WebkitMaskRepeat: 'no-repeat',
 												WebkitMaskSize: 'cover',
@@ -112,7 +142,7 @@ export default function Section2() {
 									className="absolute -bottom-2 left-0 w-[70px] h-[70px] object-contain"
 								/>
 
-								<div className="absolute bottom-0 right-0 z-20">
+								<div className="absolute bottom-0 right-2 z-20">
 									<h3 className="text-white text-3xl font-bold">{year}</h3>
 								</div>
 							</div>
@@ -124,13 +154,13 @@ export default function Section2() {
 			{/* ===== Mobile Version ===== */}
 			<div className="lg:hidden">
 				{/* Range buttons */}
-				<div className="px-6 mb-8 flex gap-2 overflow-x-auto pb-2">
+				<div className="px-2 mb-8 flex gap-1 overflow-x-auto pb-2">
 					{yearRanges.map((range, idx) => (
 						<button
 							key={idx}
 							onClick={() => handleRangeChange(idx)}
-							className={`px-2 py-1 rounded border-2 whitespace-nowrap transition-all ${
-								activeRange === idx
+							className={`px-1 py-2 rounded border-2 whitespace-nowrap transition-all font-medium ${
+								currentIndex === idx
 									? "bg-white/20 border-white text-white text-sm"
 									: "bg-transparent border-white/40 text-white/70 text-sm"
 							}`}
@@ -141,32 +171,43 @@ export default function Section2() {
 				</div>
 
 				{/* Navigation + Grid */}
-				<div className="relative px-6 flex flex-col items-center">
+				<div 
+					className="relative px-6 flex flex-col items-center"
+					onTouchStart={handleTouchStart}
+					onTouchMove={handleTouchMove}
+					onTouchEnd={handleTouchEnd}
+				>
 					{/* Prev Button */}
-					{currentPage > 0 && (
-						<button
-							onClick={handlePrevPage}
-							className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white text-black p-2 rounded-full shadow-lg transition-all"
-							aria-label="Previous"
-						>
-							<ChevronLeft size={22} />
-						</button>
-					)}
+					<button
+						onClick={handlePrev}
+						disabled={currentIndex === 0}
+						className={`absolute left-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-none transition-all ${
+							currentIndex === 0 
+								? 'bg-black/30 text-white/30 cursor-not-allowed' 
+								: 'bg-black/60 hover:bg-black/80 text-white'
+						}`}
+						aria-label="Previous"
+					>
+						<ChevronLeft size={28} strokeWidth={3} />
+					</button>
 
 					{/* Next Button */}
-					{currentPage < totalPages - 1 && (
-						<button
-							onClick={handleNextPage}
-							className="absolute right-2 top-1/2 -translate-y-1/2 z-30 bg-white/80 hover:bg-white text-black p-2 rounded-full shadow-lg transition-all"
-							aria-label="Next"
-						>
-							<ChevronRight size={22} />
-						</button>
-					)}
+					<button
+						onClick={handleNext}
+						disabled={currentIndex >= yearRanges.length - 1}
+						className={`absolute right-2 top-1/2 -translate-y-1/2 z-30 p-2 rounded-none transition-all ${
+							currentIndex >= yearRanges.length - 1 
+								? 'bg-black/30 text-white/30 cursor-not-allowed' 
+								: 'bg-black/60 hover:bg-black/80 text-white'
+						}`}
+						aria-label="Next"
+					>
+						<ChevronRight size={28} strokeWidth={3} />
+					</button>
 
 					{/* 2x2 Grid */}
 					<div className="grid grid-cols-2 gap-4">
-						{getCurrentPageYears().map((year) => (
+						{currentRangeYears.map((year) => (
 							<div key={year} className="relative">
 								<div className="relative w-[150px] h-[150px] flex-shrink-0">
 									{year === 2026 ? (
@@ -184,7 +225,7 @@ export default function Section2() {
 											}}
 										>
 											<p className="text-white/80 text-xs leading-snug">
-												“We can’t wait to celebrate our 20th Desifest and mark this milestone on our wall and elevate our journey together!”
+												"We can't wait to celebrate our 20th Desifest and mark this milestone on our wall and elevate our journey together!"
 											</p>
 										</div>
 									) : (
@@ -193,7 +234,7 @@ export default function Section2() {
 												src={`./timeline/${year}.png`}
 												loading="lazy"
 												alt={`Year ${year}`}
-												className="w-full h-full object-fill"
+												className="w-full h-full object-cover"
 												style={{
 													WebkitMaskImage: 'url(/MemoryWall.png)',
 													WebkitMaskRepeat: 'no-repeat',
@@ -204,9 +245,9 @@ export default function Section2() {
 												}}
 											/>
 											<div
-												className="absolute inset-0 pointer-events-none"
+												className="absolute inset-0"
 												style={{
-													background: `radial-gradient(circle at 80% 85%, rgba(134,10,0,0.95) 0%, rgba(134,10,0,0.6) 25%, transparent 50%)`,
+													background: `linear-gradient(to bottom right, transparent 10%, #6C070B 100%)`,
 													WebkitMaskImage: 'url(/MemoryWall.png)',
 													WebkitMaskRepeat: 'no-repeat',
 													WebkitMaskSize: 'cover',
@@ -231,19 +272,6 @@ export default function Section2() {
 									</div>
 								</div>
 							</div>
-						))}
-					</div>
-
-					{/* Page Indicator */}
-					<div className="flex justify-center gap-2 mt-6">
-						{Array.from({ length: totalPages }).map((_, idx) => (
-							<button
-								key={idx}
-								onClick={() => setCurrentPage(idx)}
-								className={`w-2 h-2 rounded-full transition-all ${
-									currentPage === idx ? "bg-white w-6" : "bg-white/40"
-								}`}
-							/>
 						))}
 					</div>
 				</div>
