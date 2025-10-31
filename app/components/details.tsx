@@ -25,7 +25,7 @@ export default function Details() {
 
 			const slidesLength = 2
 			
-			const extraScroll = window.innerWidth * 1.5
+			const extraScroll = window.innerWidth * 0.8
 			const totalScrollDistance = wrapper.scrollWidth - container.clientWidth + extraScroll
 			
 			gsap.to(wrapper, {

@@ -559,10 +559,10 @@ useEffect(() => {
 						>
 							<div className="">
 								<img
-									src="./audience2.png"
+									src="./audience3.png"
 									loading="lazy"
 									alt=""
-									className="w-[80%] h-auto"
+									className="w-[60%] h-auto rotate-15"
 								/>
 							</div>
 
@@ -588,15 +588,15 @@ useEffect(() => {
 						>
 							<div className="">
 								<img
-									src="./audience2.png"
+									src="./audience4.png"
 									loading="lazy"
 									alt=""
-									className="w-[80%] h-auto"
+									className="w-[60%] h-auto -rotate-15"
 								/>
 							</div>
 
 							<div className="grid gap-12 relative">
-								<div className="absolute top-0 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
+								<div className="absolute top-20 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									FACEBOOK &<br />
 									INSTAGRAM:
 								</div>
@@ -629,15 +629,15 @@ useEffect(() => {
 						>
 							<div className="">
 								<img
-									src="./audience2.png"
+									src="./audience5.png"
 									loading="lazy"
 									alt=""
-									className="w-[80%] h-auto"
+									className="w-[60%] h-auto rotate-[10deg] "
 								/>
 							</div>
 
-							<div className="grid gap-12 relative  lg:pr-64">
-								<div className="absolute top-0 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
+							<div className="grid gap-12 relative  lg:pr-48">
+								<div className="absolute top-0 lg:top-0 -translate-x-full left-8 lg:-left-10 text-text lg:text-2xl text-xs font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									YOUTUBE &<br />
 									GOOGLE DISPLAY:
 								</div>
