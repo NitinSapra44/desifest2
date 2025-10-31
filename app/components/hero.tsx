@@ -44,22 +44,23 @@ export default function Hero() {
         />
 
         {/* Buttons (Mobile) */}
-        <div className="flex flex-col lg:hidden items-center justify-center -mt-40 mb-16 px-6 space-y-4 relative z-30">
-          <a
-            href="./overview-kit.pdf"
-            download
-            className="uppercase text-center text-lg font-medium text-text px-6 py-3 bg-[#fc0314] hover:opacity-90 transition rounded-none"
-          >
-            Download Overview Kit
-          </a>
+        <div className="flex flex-col lg:hidden items-center justify-center -mt-48 mb-16 px-6 space-y-4 relative z-30">
+  <a
+    href="./overview-kit.pdf"
+    download
+    className="uppercase w-full max-w-[250px] text-center text-base font-medium text-text px-2 py-2 bg-[#fc0314] hover:opacity-90 transition rounded-none"
+  >
+    Download Overview Kit
+  </a>
 
-          <a
-            href="#contact-form"
-            className="uppercase text-center text-lg font-medium text-text px-6 py-3 bg-[#FB0015]/25 border border-white hover:bg-[#FB0015]/40 transition rounded-none"
-          >
-            Request Full Sponsor Kit
-          </a>
-        </div>
+  <a
+    href="#contact-form"
+    className="uppercase w-full max-w-[250px] text-center text-base font-medium text-text px-2 py-2 bg-[#FB0015]/25 border border-white hover:bg-[#FB0015]/40 transition rounded-none"
+  >
+    Request Full Sponsor Kit
+  </a>
+</div>
+
       </div>
     </section>
   )
