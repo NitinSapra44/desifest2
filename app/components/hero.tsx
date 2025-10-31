@@ -2,8 +2,8 @@ export default function Hero() {
   return (
     <section id="the-2026-event" className="relative pb-24 bg-black">
       {/* Sticky Hero Text */}
-      <div className="absolute inset-0 lg:sticky lg:top-[calc(100vh-400px)] z-30 flex items-center lg:items-end justify-center">
-        <img src="./hero_text.svg" alt="" className="lg:h-[344px] h-32 w-auto" />
+      <div className="absolute inset-0 lg:sticky lg:top-[calc(100vh-400px)] z-30 flex items-center lg:items-end justify-center -translate-y-12 lg:translate-y-0">
+        <img src="./hero_text.svg" alt="" className="lg:h-[344px] h-24 w-auto" />
       </div>
 
       {/* Background Section */}
@@ -13,7 +13,7 @@ export default function Hero() {
           <img
             src="./leaf.png"
             alt=""
-            className="w-[75%] h-auto object-cover lg:-translate-y-28"
+            className="w-[70%] h-auto object-cover lg:-translate-y-28"
           />
         </div>
 
@@ -35,16 +35,16 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="w-screen h-[30vh] lg:h-screen object-cover"
+          className="w-screen h-[25vh] lg:h-screen object-cover"
         />
         <img
           src="./hero.png"
           alt=""
-          className="w-screen h-[30vh] lg:h-screen object-cover"
+          className="w-screen h-[40vh] lg:h-screen object-cover"
         />
 
         {/* Buttons (Mobile) */}
-        <div className="flex flex-col lg:hidden items-center justify-center mt-8 mb-24 px-6 space-y-4 relative z-30">
+        <div className="flex flex-col lg:hidden items-center justify-center -mt-40 mb-16 px-6 space-y-4 relative z-30">
           <a
             href="./overview-kit.pdf"
             download

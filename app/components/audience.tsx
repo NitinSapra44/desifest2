@@ -566,7 +566,7 @@ useEffect(() => {
 								/>
 							</div>
 
-							<div className="grid gap-12 relative">
+							<div className="grid gap-12 relative pr-20">
 								<div className="absolute top-0 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									MEDIA FEATURES:
 								</div>
@@ -596,7 +596,7 @@ useEffect(() => {
 							</div>
 
 							<div className="grid gap-12 relative">
-								<div className="absolute top-20 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
+								<div className="absolute top-0 left-0 lg:top-20 -translate-x-full lg:-left-20 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									FACEBOOK &<br />
 									INSTAGRAM:
 								</div>
