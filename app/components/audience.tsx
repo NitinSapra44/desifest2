@@ -637,7 +637,7 @@ useEffect(() => {
 							</div>
 
 							<div className="grid gap-12 relative  lg:pr-56">
-								<div className="absolute top-0 lg:top-0 -translate-x-full left-8 lg:-left-10 text-text lg:text-2xl text-xs font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
+								<div className="absolute top-0 lg:top-0 -translate-x-full left-8 lg:-left-30 text-text lg:text-2xl text-xs font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									YOUTUBE &<br />
 									GOOGLE DISPLAY:
 								</div>
