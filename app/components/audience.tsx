@@ -566,14 +566,14 @@ useEffect(() => {
 								/>
 							</div>
 
-							<div className="grid gap-12 relative pr-20">
+							<div className="grid gap-12 relative">
 								<div className="absolute top-0 -translate-x-full left-0 text-text lg:text-4xl text-base font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									MEDIA FEATURES:
 								</div>
 
-								<div className="grid gap-1">
-									<h2 className="lg:text-[48px] text-2xl leading-normal mission_text text-center">
-										ctv, CBC, OMNI, Narcity, Todo toronto
+								<div className="grid gap-1 pr-36">
+									<h2 className="lg:text-[44px] text-2xl leading-normal mission_text text-center">
+										ctv, CBC<br/> OMNI, Narcity<br/> Todo toronto
 									</h2>
 									{/* <span className="text-4xl font-medium uppercase text-center">Views</span> */}
 								</div>
@@ -632,11 +632,11 @@ useEffect(() => {
 									src="./audience5.png"
 									loading="lazy"
 									alt=""
-									className="w-[60%] h-auto rotate-[10deg] "
+									className="w-[50%] h-auto rotate-[10deg] "
 								/>
 							</div>
 
-							<div className="grid gap-12 relative  lg:pr-48">
+							<div className="grid gap-12 relative  lg:pr-56">
 								<div className="absolute top-0 lg:top-0 -translate-x-full left-8 lg:-left-10 text-text lg:text-2xl text-xs font-bold uppercase bg-foreground lg:px-6 px-4 py-3 w-fit">
 									YOUTUBE &<br />
 									GOOGLE DISPLAY:
